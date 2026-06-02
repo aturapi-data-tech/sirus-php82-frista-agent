@@ -1,0 +1,18 @@
+{
+    "port": 9998,
+    "fristaPath": "C:\\frista\\frista.exe",
+    "username": "ISIKAN_USERNAME",
+    "password": "ISIKAN_PASSWORD",
+    "allowedOrigins": [
+        "http://localhost",
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+        "http://192.168.1.100",
+        "http://sirus.local"
+    ],
+    "loginWindowTitle": "Login Frista",
+    "mainWindowTitle": "Frista",
+    "launchWaitMs": 12000,
+    "stepDelayMs": 300,
+    "submitAfterBpjs": true
+}
