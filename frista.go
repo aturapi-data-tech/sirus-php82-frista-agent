@@ -115,10 +115,11 @@ if (WaitWindow $LoginTitle $LaunchWait) {
         [System.Windows.Forms.SendKeys]::SendWait((Esc $Pass))
         Start-Sleep -Milliseconds $StepDelay
         # Form FRISTA tidak submit lewat Enter di field password (tombol Login
-        # bukan AcceptButton). Jadi: TAB ke tombol Login, lalu tekan untuk klik.
+        # bukan AcceptButton). Jadi: TAB ke tombol Login, lalu SPASI untuk klik
+        # (tombol yang fokus diaktifkan dengan Space, bukan Enter).
         [System.Windows.Forms.SendKeys]::SendWait('{TAB}')
         Start-Sleep -Milliseconds $StepDelay
-        [System.Windows.Forms.SendKeys]::SendWait('{ENTER}')
+        [System.Windows.Forms.SendKeys]::SendWait(' ')
     }
 }
 
