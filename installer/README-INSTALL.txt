@@ -10,16 +10,33 @@ akses ke desktop yang sedang login. Jadi TIDAK perlu Run as administrator.
 
 LANGKAH INSTALL
 ---------------
-1. Copy seluruh isi folder ini ke PC pendaftaran (mis. C:\SirusFristaAgent).
+1. Siapkan file di PC pendaftaran — pilih salah satu:
+
+   OPSI 1 (dari folder):
+     Copy seluruh isi folder ini ke satu folder, mis. C:\SirusFristaAgent.
+
+   OPSI 2 (dari file ZIP):
+     a. Buat folder kosong dulu, mis. C:\SirusFristaAgent.
+     b. Klik kanan ZIP -> Extract All... -> arahkan ke folder itu.
+        (Isi ZIP ada di root, jadi WAJIB diekstrak ke folder khusus
+         supaya 7 file-nya tidak berserakan.)
+
 2. Buka config.json, isi:
      - "fristaPath" : lokasi frista.exe (default C:\frista\frista.exe)
      - "username"   : username login FRISTA
      - "password"   : password login FRISTA
 3. Dobel-klik setup.bat (TANPA admin).
    -> file dicopy ke %LOCALAPPDATA%\SirusFristaAgent
-   -> didaftarkan autostart (jalan tiap user login)
+   -> didaftarkan AUTOSTART (jalan tiap user login / setelah PC restart)
    -> agent langsung jalan, browser dashboard terbuka
 4. Selesai. Coba dari dashboard: isi ID BPJS, klik "Buka FRISTA Sekarang".
+
+CATATAN AUTOSTART
+-----------------
+Autostart BUKAN langkah terpisah. Ia aktif otomatis saat setup.bat dijalankan.
+Ekstrak ZIP saja (tanpa setup.bat) -> agent BELUM autostart.
+Cek aktif: HKCU\Software\Microsoft\Windows\CurrentVersion\Run -> entri
+"SirusFristaAgent".
 
 UPDATE
 ------
