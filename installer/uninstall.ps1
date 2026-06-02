@@ -1,4 +1,4 @@
-# uninstall.ps1 — hapus autostart + file sirus-frista-agent.
+# uninstall.ps1 - hapus autostart + file sirus-frista-agent.
 $ErrorActionPreference = 'SilentlyContinue'
 
 $AppName    = 'SirusFristaAgent'
