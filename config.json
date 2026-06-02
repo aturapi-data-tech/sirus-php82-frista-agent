@@ -4,6 +4,8 @@
     "username": "ISIKAN_USERNAME",
     "password": "ISIKAN_PASSWORD",
     "allowedOrigins": [
+        "https://dev-sirus.rsimadinah.com",
+        "https://sirus.rsimadinah.com",
         "http://localhost",
         "http://localhost:8000",
         "http://127.0.0.1:8000",
