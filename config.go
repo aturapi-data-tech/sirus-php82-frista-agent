@@ -16,6 +16,10 @@ import (
 //   LoginWindowTitle : judul (prefix) jendela login Frista — utk AppActivate
 //   MainWindowTitle  : judul (prefix) jendela utama Frista setelah login
 //   LaunchWaitMs     : maksimal tunggu jendela muncul setelah launch (ms)
+//   LoginProbeMs     : tunggu jendela login saat FRISTA SUDAH jalan (ms). Pendek
+//                      saja — kalau jendela login tidak muncul secepat ini, berarti
+//                      sudah login, jadi langsung lanjut (tidak buang waktu nunggu
+//                      penuh LaunchWaitMs untuk jendela login yang tidak ada).
 //   StepDelayMs      : jeda antar langkah ketik (ms) — biar field sempat fokus
 //   SubmitAfterBpjs  : tekan Enter setelah mengetik ID BPJS peserta
 type Config struct {
@@ -27,6 +31,7 @@ type Config struct {
 	LoginWindowTitle string   `json:"loginWindowTitle"`
 	MainWindowTitle  string   `json:"mainWindowTitle"`
 	LaunchWaitMs     int      `json:"launchWaitMs"`
+	LoginProbeMs     int      `json:"loginProbeMs"`
 	StepDelayMs      int      `json:"stepDelayMs"`
 	SubmitAfterBpjs  bool     `json:"submitAfterBpjs"`
 }
@@ -54,8 +59,11 @@ func loadConfig(path string) (*Config, error) {
 	if c.LaunchWaitMs == 0 {
 		c.LaunchWaitMs = 12000
 	}
+	if c.LoginProbeMs == 0 {
+		c.LoginProbeMs = 1500
+	}
 	if c.StepDelayMs == 0 {
-		c.StepDelayMs = 300
+		c.StepDelayMs = 180
 	}
 	return &c, nil
 }

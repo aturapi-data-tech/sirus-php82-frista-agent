@@ -68,6 +68,7 @@ $BpjsId      = '%s'
 $LoginTitle  = '%s'
 $MainTitle   = '%s'
 $LaunchWait  = %d
+$LoginProbe  = %d
 $StepDelay   = %d
 $SubmitBpjs  = %s
 $ProcName    = [System.IO.Path]::GetFileNameWithoutExtension($FristaPath)
@@ -98,13 +99,22 @@ function WaitWindow([string]$title, [int]$timeoutMs) {
 
 # 1. Launch frista bila belum jalan
 $running = Get-Process -Name $ProcName -ErrorAction SilentlyContinue
+$justLaunched = $false
 if (-not $running) {
     if (-not (Test-Path $FristaPath)) { Write-Error "frista.exe tidak ditemukan: $FristaPath"; exit 2 }
     Start-Process -FilePath $FristaPath -WorkingDirectory ([System.IO.Path]::GetDirectoryName($FristaPath))
+    $justLaunched = $true
 }
 
+# Pilih timeout tunggu jendela login:
+#   - Baru di-launch  -> tunggu penuh $LaunchWait (FRISTA boot bisa beberapa detik).
+#   - Sudah jalan     -> cukup probe singkat $LoginProbe. Kalau jendela login tidak
+#                        muncul secepat ini, berarti sudah login -> langsung lanjut
+#                        (tidak buang waktu nunggu jendela login yang tidak ada).
+if ($justLaunched) { $LoginWait = $LaunchWait } else { $LoginWait = $LoginProbe }
+
 # 2. Login — hanya bila jendela login muncul (kalau sudah login, dilewati)
-if (WaitWindow $LoginTitle $LaunchWait) {
+if (WaitWindow $LoginTitle $LoginWait) {
     [void]$shell.AppActivate($LoginTitle)
     Start-Sleep -Milliseconds $StepDelay
     if ($User.Length -gt 0) {
@@ -147,6 +157,7 @@ Write-Output 'OK'
 		psQuote(config.LoginWindowTitle),
 		psQuote(config.MainWindowTitle),
 		config.LaunchWaitMs,
+		config.LoginProbeMs,
 		config.StepDelayMs,
 		submit,
 	)

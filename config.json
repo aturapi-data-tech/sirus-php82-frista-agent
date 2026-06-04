@@ -15,6 +15,7 @@
     "loginWindowTitle": "Login Frista",
     "mainWindowTitle": "Frista",
     "launchWaitMs": 12000,
-    "stepDelayMs": 300,
+    "loginProbeMs": 1500,
+    "stepDelayMs": 180,
     "submitAfterBpjs": true
 }
