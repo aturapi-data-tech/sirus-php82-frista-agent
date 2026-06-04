@@ -49,11 +49,10 @@ Write-Host "INSTALL SUKSES." -ForegroundColor Green
 Write-Host "  Lokasi : $InstallDir"
 Write-Host "  Config : $dstConfig"
 Write-Host ""
-Write-Host "PENTING: edit config.json -> isi username, password, fristaPath, lalu restart agent." -ForegroundColor Yellow
+Write-Host "PENTING: pastikan config.json sudah diisi (username, password, fristaPath) SEBELUM distribusi." -ForegroundColor Yellow
+Write-Host "Agent jalan SENYAP di background (tanpa jendela). Cek status: Task Manager -> 'sirus-frista-agent.exe'." -ForegroundColor Gray
+Write-Host "Log tersimpan di: $(Join-Path $InstallDir 'agent.log')" -ForegroundColor Gray
 
-# Buka dashboard + folder config
-try {
-    $port = (Get-Content $dstConfig -Raw | ConvertFrom-Json).port
-    Start-Process "http://localhost:$port"
-} catch {}
-Start-Process notepad.exe $dstConfig
+# Catatan: dashboard & notepad config TIDAK dibuka otomatis lagi, supaya install
+# benar-benar senyap dan user tidak melihat / menutup apa pun. Isi config.json
+# sebelum distribusi, atau edit manual via: notepad "$dstConfig"

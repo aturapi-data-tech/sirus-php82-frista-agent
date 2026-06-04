@@ -28,8 +28,14 @@ LANGKAH INSTALL
 3. Dobel-klik setup.bat (TANPA admin).
    -> file dicopy ke %LOCALAPPDATA%\SirusFristaAgent
    -> didaftarkan AUTOSTART (jalan tiap user login / setelah PC restart)
-   -> agent langsung jalan, browser dashboard terbuka
-4. Selesai. Coba dari dashboard: isi ID BPJS, klik "Buka FRISTA Sekarang".
+   -> agent langsung jalan SENYAP di background (TIDAK ada jendela)
+4. Selesai. Agent dipicu dari tombol "Scan Wajah" di web Sirus.
+
+PENTING: agent kini jalan SENYAP (mode background, tanpa jendela console),
+supaya user tidak tidak sengaja menutupnya. Karena itu config.json HARUS sudah
+diisi SEBELUM setup.bat dijalankan (installer tidak lagi membuka Notepad/dashboard).
+Cek agent jalan: Task Manager -> proses "sirus-frista-agent.exe".
+Log aktivitas tersimpan di: %LOCALAPPDATA%\SirusFristaAgent\agent.log
 
 CATATAN AUTOSTART
 -----------------

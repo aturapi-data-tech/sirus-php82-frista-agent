@@ -15,9 +15,14 @@ DIST=dist
 rm -rf "$DIST"
 mkdir -p "$DIST"
 
-echo "[1/3] Build Go agent for Windows AMD64..."
+echo "[1/3] Build Go agent for Windows AMD64 (GUI subsystem = tanpa jendela console)..."
+# -H windowsgui : binary TIDAK memunculkan jendela console hitam sama sekali.
+#                 Agent jalan senyap di background (hanya kelihatan di Task Manager),
+#                 jadi user tidak bisa tidak sengaja meng-close jendelanya.
+#                 Konsekuensi: stdout/stderr tidak ada -> log dialihkan ke file (lihat main.go).
+# -s -w         : strip debug info, kecilkan ukuran binary.
 GOOS=windows GOARCH=amd64 go build \
-    -ldflags="-s -w" \
+    -ldflags="-H windowsgui -s -w" \
     -o "$DIST/sirus-frista-agent.exe" \
     .
 

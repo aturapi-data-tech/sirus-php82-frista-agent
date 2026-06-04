@@ -24,12 +24,24 @@ func main() {
 	if err != nil {
 		log.Fatalf("cannot get exe path: %v", err)
 	}
-	configPath := filepath.Join(filepath.Dir(exePath), "config.json")
+	exeDir := filepath.Dir(exePath)
+	configPath := filepath.Join(exeDir, "config.json")
 
 	// Saat dev, fallback ke ./config.json
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
 		configPath = "config.json"
 	}
+
+	// Binary di-build dengan -H windowsgui (tanpa console), jadi stdout/stderr
+	// tidak ke mana-mana. Alihkan log ke file di samping .exe supaya tetap bisa
+	// di-debug di lapangan. Append (tidak hapus log lama). Bila gagal buka file,
+	// biarkan log default (mis. saat dev di terminal).
+	logPath := filepath.Join(exeDir, "agent.log")
+	if lf, err := os.OpenFile(logPath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644); err == nil {
+		log.SetOutput(lf)
+		defer lf.Close()
+	}
+	log.SetFlags(log.LstdFlags | log.Lmsgprefix)
 
 	config, err := loadConfig(configPath)
 	if err != nil {
